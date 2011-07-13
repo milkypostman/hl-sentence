@@ -4,7 +4,7 @@
 
 ;; Author: Donald Ephraim Curtis <dcurtis@milkbox.net>
 ;; URL: http://github.com/milkypostman/hl-sentence
-;; Version: 1
+;; Version: 2
 ;; Keywords: highlighting
 
 ;; This file is not part of GNU Emacs.
@@ -53,6 +53,7 @@
 
 ;;;###autoload
 (define-minor-mode hl-sentence-mode
+  "Enable highlighting of currentent sentence."
   (progn
     (if hl-sentence-mode
         (move-overlay hl-sentence-extent 0 0 (current-buffer)))
