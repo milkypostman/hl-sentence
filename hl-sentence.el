@@ -4,7 +4,7 @@
 
 ;; Author: Donald Ephraim Curtis <dcurtis@milkbox.net>
 ;; URL: http://github.com/milkypostman/hl-sentence
-;; Version: 2
+;; Version: 3
 ;; Keywords: highlighting
 
 ;; This file is not part of GNU Emacs.
@@ -29,14 +29,12 @@
 
 ;;; Code:
 
-(setq hl-sentence-end "[^.].[.?!]+\\([]\"')}]*\\|<[^>]+>\\)\\($\\| $\\|\t\\| \\)[ \t\n]*")
-
 (setq hl-sentence-face (make-face 'hl-sentence-face))
 
 (defun hl-sentence-begin-pos () (save-excursion (unless (= (point) (point-max)) (forward-char)) (backward-sentence) (point)))
 (defun hl-sentence-end-pos () (save-excursion (unless (= (point) (point-max)) (forward-char)) (backward-sentence) (forward-sentence) (point)))
 
-(setq hl-sentence-mode nil)
+;; (setq hl-sentence-mode nil)
 
 (defun hl-sentence-current (&rest ignore)
   "Highlight current sentence."
@@ -54,10 +52,12 @@
 ;;;###autoload
 (define-minor-mode hl-sentence-mode
   "Enable highlighting of currentent sentence."
+  :init-value nil
   (progn
     (if hl-sentence-mode
-        (move-overlay hl-sentence-extent 0 0 (current-buffer)))
-    (add-hook 'post-command-hook 'hl-sentence-current))
+          (add-hook 'post-command-hook 'hl-sentence-current nil t)
+      (move-overlay hl-sentence-extent 0 0 (current-buffer))
+      (remove-hook 'post-command-hook 'hl-sentence-current t)))
   )
 
 
