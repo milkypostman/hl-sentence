@@ -2,6 +2,7 @@
 
 Highlight sentences in Emacs with a custom face.  Very nice.
 
+![preview](https://github.com/milkypostman/screenshots/raw/master/hl-sentence.png)
 
 # Customizing the Face
 
@@ -13,7 +14,7 @@ make `hl-sentence-face` be `black`.  Works nicely.
 
 # Credit
 
-This was taken mostly from 
+This was taken mostly from
 [http://www.emacswiki.org/emacs/SentenceHighlight]()
 
 I believe Aaron Hawley is responsible.  I just took it and made it a
