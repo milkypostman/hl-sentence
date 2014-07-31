@@ -44,8 +44,15 @@
 ;; http://www.emacswiki.org/emacs/SentenceHighlight by Aaron Hawley.
 
 ;;; Code:
+(defgroup hl-sentence nil
+  "Highlight the current sentence."
+  :group 'convenience)
 
-(setq hl-sentence-face (make-face 'hl-sentence-face))
+;;;###autoload
+(defface hl-sentence-face
+  '((t))
+  "The face used to highlight the current sentence."
+  :group 'hl-sentence)
 
 (defun hl-sentence-begin-pos ()
   "Return the point of the beginning of a sentence."
@@ -64,6 +71,19 @@
     (forward-sentence)
     (point)))
 
+(defvar hl-sentence-extent nil
+  "The location of the hl-sentence-mode overlay.")
+
+;;;###autoload
+(define-minor-mode hl-sentence-mode
+  "Enable highlighting of currentent sentence."
+  :init-value nil
+  (progn
+    (if hl-sentence-mode
+          (add-hook 'post-command-hook 'hl-sentence-current nil t)
+      (move-overlay hl-sentence-extent 0 0 (current-buffer))
+      (remove-hook 'post-command-hook 'hl-sentence-current t))))
+
 (defun hl-sentence-current ()
   "Highlight current sentence."
   (and hl-sentence-mode (> (buffer-size) 0)
@@ -76,17 +96,8 @@
                             (current-buffer))))))
 
 (setq hl-sentence-extent (make-overlay 0 0))
-(overlay-put hl-sentence-extent 'face hl-sentence-face)
+(overlay-put hl-sentence-extent 'face 'hl-sentence-face)
 
-;;;###autoload
-(define-minor-mode hl-sentence-mode
-  "Enable highlighting of currentent sentence."
-  :init-value nil
-  (progn
-    (if hl-sentence-mode
-          (add-hook 'post-command-hook 'hl-sentence-current nil t)
-      (move-overlay hl-sentence-extent 0 0 (current-buffer))
-      (remove-hook 'post-command-hook 'hl-sentence-current t))))
 
 
 (provide 'hl-sentence)
