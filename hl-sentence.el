@@ -26,28 +26,53 @@
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
+;;; Commentary:
+;;
+;; Highlight the current sentence using `hl-sentence-face'.
+;;
+;; To use this package, add the following code to your `emacs-init-file'
+;;
+;; (require 'hl-sentence)
+;; (add-hook 'YOUR-MODE-HOOK 'hl-sentence-mode)
+;; (set-face-attribute 'hl-sentence-face nil
+;;                     :foreground "#444")
+;;
+;; Please send bug reports to
+;; https://github.com/milkypostman/hl-sentence/issues
+;;
+;; This mode started out as a bit of elisp at
+;; http://www.emacswiki.org/emacs/SentenceHighlight by Aaron Hawley.
 
 ;;; Code:
+(defgroup hl-sentence nil
+  "Highlight the current sentence."
+  :group 'convenience)
 
-(setq hl-sentence-face (make-face 'hl-sentence-face))
+;;;###autoload
+(defface hl-sentence-face
+  '((t))
+  "The face used to highlight the current sentence."
+  :group 'hl-sentence)
 
-(defun hl-sentence-begin-pos () (save-excursion (unless (= (point) (point-max)) (forward-char)) (backward-sentence) (point)))
-(defun hl-sentence-end-pos () (save-excursion (unless (= (point) (point-max)) (forward-char)) (backward-sentence) (forward-sentence) (point)))
+(defun hl-sentence-begin-pos ()
+  "Return the point of the beginning of a sentence."
+  (save-excursion
+    (unless (= (point) (point-max))
+      (forward-char))
+    (backward-sentence)
+    (point)))
 
-;; (setq hl-sentence-mode nil)
+(defun hl-sentence-end-pos ()
+  "Return the point of the end of a sentence."
+  (save-excursion
+    (unless (= (point) (point-max))
+      (forward-char))
+    (backward-sentence)
+    (forward-sentence)
+    (point)))
 
-(defun hl-sentence-current (&rest ignore)
-  "Highlight current sentence."
-    (and hl-sentence-mode (> (buffer-size) 0)
-    (progn
-      (and  (boundp 'hl-sentence-extent)
-        hl-sentence-extent
-        (move-overlay hl-sentence-extent (hl-sentence-begin-pos) (hl-sentence-end-pos) (current-buffer)) ;;; XEmacs: use set-extent-endpoints instead of move-overlay
-      )
-)))
-
-(setq hl-sentence-extent (make-overlay 0 0))
-(overlay-put hl-sentence-extent 'face hl-sentence-face)
+(defvar hl-sentence-extent nil
+  "The location of the hl-sentence-mode overlay.")
 
 ;;;###autoload
 (define-minor-mode hl-sentence-mode
@@ -57,11 +82,24 @@
     (if hl-sentence-mode
           (add-hook 'post-command-hook 'hl-sentence-current nil t)
       (move-overlay hl-sentence-extent 0 0 (current-buffer))
-      (remove-hook 'post-command-hook 'hl-sentence-current t)))
-  )
+      (remove-hook 'post-command-hook 'hl-sentence-current t))))
+
+(defun hl-sentence-current ()
+  "Highlight current sentence."
+  (and hl-sentence-mode (> (buffer-size) 0)
+       (progn
+         (and (boundp 'hl-sentence-extent)
+              hl-sentence-extent
+              (move-overlay hl-sentence-extent
+                            (hl-sentence-begin-pos)
+                            (hl-sentence-end-pos)
+                            (current-buffer))))))
+
+(setq hl-sentence-extent (make-overlay 0 0))
+(overlay-put hl-sentence-extent 'face 'hl-sentence-face)
+
 
 
 (provide 'hl-sentence)
-
 
 ;;; hl-sentence.el ends here
