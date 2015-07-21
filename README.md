@@ -15,7 +15,7 @@ make `hl-sentence-face` be `black`.  Works nicely.
 # Credit
 
 This was taken mostly from
-[http://www.emacswiki.org/emacs/SentenceHighlight]()
+http://www.emacswiki.org/emacs/SentenceHighlight
 
 I believe Aaron Hawley is responsible.  I just took it and made it a
 single file and to properly enable and disable the minor-mode.
