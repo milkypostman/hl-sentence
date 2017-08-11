@@ -49,7 +49,7 @@
   :group 'convenience)
 
 ;;;###autoload
-(defface hl-sentence-face '((t :inherit highlight))
+(defface hl-sentence '((t :inherit highlight))
   "The face used to highlight the current sentence."
   :group 'hl-sentence)
 
