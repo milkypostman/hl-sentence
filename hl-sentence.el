@@ -98,8 +98,8 @@
 (setq hl-sentence-extent (make-overlay 0 0))
 (overlay-put hl-sentence-extent 'face 'hl-sentence-face)
 
-
-
 (provide 'hl-sentence)
-
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; End:
 ;;; hl-sentence.el ends here
