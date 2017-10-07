@@ -93,7 +93,7 @@
 		     (current-buffer))))
 
 (setq hl-sentence-extent (make-overlay 0 0))
-(overlay-put hl-sentence-extent 'face 'hl-sentence-face)
+(overlay-put hl-sentence-extent 'face 'hl-sentence)
 
 (provide 'hl-sentence)
 ;; Local Variables:
