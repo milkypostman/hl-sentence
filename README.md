@@ -6,11 +6,11 @@ Highlight sentences in Emacs with a custom face.  Very nice.
 
 # Customizing the Face
 
-Highlighting is based on the `hl-sentence-face` which you can
+Highlighting is based on the `hl-sentence` face which you can
 customize to make the face look the way you want.  I use this
 primarily in LaTeX mode where I enable `variable-pitch-mode`.  So I
 customize my `variable-pitch` face foreground to be `gray60` and then
-make `hl-sentence-face` be `black`.  Works nicely.
+make `hl-sentence` be `black`.  Works nicely.
 
 # Credit
 
