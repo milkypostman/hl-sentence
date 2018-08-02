@@ -87,13 +87,21 @@
 
 (defun hl-sentence-current ()
   "Highlight current sentence."
+  (when (and
+         (not (string-match-p "^#.*"
+                              (buffer-substring
+                               (hl-sentence-begin-pos)
+                               (hl-sentence-end-pos))))
+         (not (org-at-heading-p))
+         (not (org-at-table-p))
+         (not (org-at-TBLFM-p)))
   (and hl-sentence-mode (> (buffer-size) 0)
        (boundp 'hl-sentence-extent)
        hl-sentence-extent
        (move-overlay hl-sentence-extent
 		     (hl-sentence-begin-pos)
 		     (hl-sentence-end-pos)
-		     (current-buffer))))
+		     (current-buffer)))))
 
 (setq hl-sentence-extent (make-overlay 0 0))
 (overlay-put hl-sentence-extent 'face 'hl-sentence)
