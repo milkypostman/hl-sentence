@@ -76,6 +76,8 @@
 (defvar hl-sentence-extent nil
   "The location of the hl-sentence-mode overlay.")
 
+(setq sentence-end "[^.].[.?!]+\\([]\"')}]*\\|<[^>]+>\\)\\($\\| $\\|\t\\| \\)[ \t\n]*")
+
 ;;;###autoload
 (define-minor-mode hl-sentence-mode
   "Enable highlighting of currentent sentence."
