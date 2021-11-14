@@ -12,6 +12,17 @@ primarily in LaTeX mode where I enable `variable-pitch-mode`.  So I
 customize my `variable-pitch` face foreground to be `gray60` and then
 make `hl-sentence` be `black`.  Works nicely.
 
+# Customising its begin/end of sentence seeking functions
+
+When checking for the begin or ending of sentence the dispatcher functions (`hl-sentence-begin-pos` and `hl-sentence-end-pos` expect some hash tables that contain functions to run based on major mode.
+
+The hash tables are `hl-sentence-begin-mode-dispatcher` and `hl-sentence-end-mode-dispatcher` currently they only include functions for org-mode.
+
+If you want to add a function you can use:
+```(puthash modename function hl-sentence-begin-mode-dispatcher)```
+or
+```(puthash modename function hl-sentence-end-mode-dispatcher)```
+
 # Credit
 
 This was taken mostly from
