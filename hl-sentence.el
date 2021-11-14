@@ -136,6 +136,7 @@ your function for your desired mode.")
   (save-excursion
     (unless (= (point) (point-max))
       (forward-char))
+    ;; (forward-sentence)
     (backward-sentence)
     (point)))
 
@@ -191,14 +192,24 @@ is no specific function for that mode it will call
 (defun hl-sentence-end-pos-text ()
   "Return the point at the end of a sentence, expects plain text." 
   (save-excursion
-    (unless (= (point) (point-max))
-      (forward-char))
+    ;;(unless (= (point) (point-max))
+    ;;  (forward-char))
+    
     ;; This causes a lot of issues in org and I'm not sure it gains
     ;; anything in text.
     ;; 
-    ;; (backward-sentence) 
-    (forward-sentence)
-    (point)))
+    ;; (backward-sentence)
+
+    ;; Use forward-paragraph to make a bound for the forward-sentence.
+    (let ((next-para (save-excursion
+                      (forward-paragraph)
+                      (point)))
+          (eos (progn
+                 (forward-sentence)
+                 (point))))
+      (if (> eos next-para)
+          next-para
+        eos))))
          
 (defun hl-sentence-end-pos (dispatcher)
   "Return the point at the end of a sentence, uses DISPATCHER to look
